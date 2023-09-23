@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const i18next = require("i18next");
 const Backend = require("i18next-fs-backend");
 const middleware = require("i18next-http-middleware");
-
+const authentication = require('./middlewares/authentication');
 const gameRouterV1 = require("./routes/v1/games");
 const userRouterV1 = require("./routes/v1/users");
 
 const app = express();
 app.use(express.json());
+require('dotenv').config();
 
 mongoose.connect("mongodb://localhost:27017/tictactoe", {
   useNewUrlParser: true,
