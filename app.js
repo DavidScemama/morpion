@@ -6,36 +6,32 @@ const middleware = require("i18next-http-middleware");
 const authentication = require('./middlewares/authentication');
 const gameRouterV1 = require("./routes/v1/games");
 const userRouterV1 = require("./routes/v1/users");
+const negociateFormat = require('./middlewares/negociate_format');
+const negociateTrad = require('./middlewares/negociate_trad');
+
 
 const app = express();
 app.use(express.json());
 require('dotenv').config();
+
 
 mongoose.connect("mongodb://localhost:27017/tictactoe", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-i18next
-  .use(Backend)
-  .use(middleware.LanguageDetector)
-  .init({
-    backend: {
-      loadPath: "./locales/{{lng}}/{{ns}}.json",
-      addPath: "./locales/{{lng}}/{{ns}}.missing.json",
-    },
-    fallbackLng: "en",
-    preload: ["en", "fr"],
-    saveMissing: true,
-  });
-
-app.use(middleware.handle(i18next));
+app.use(negociateTrad);
 
 app.use(
-  negotiateFormat({
+  negociateFormat({
     formats: ["application/json", "text/csv"],
   })
 );
+
+app.get('/', (req, res) => {
+    const welcomeMessage = req.t('welcome');
+    res.send(welcomeMessage);
+});
 
 app.use(
   "/games",
