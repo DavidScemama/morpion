@@ -10,6 +10,9 @@ const initializeMongoose = require('./config/mongoose');
 const initializePassport = require('./config/passport');
 const apiVersions = require('./middlewares/apiVersions');
 const useHATEOAS = require('./middlewares/useHATEOAS');
+const negociateFormat = require('./middlewares/negociate_format');
+const negociateTrad = require('./middlewares/negociate_trad');
+
 
 const app = express();
 app.use(express.json());
@@ -17,31 +20,24 @@ require('dotenv').config();
 initializeMongoose();
 initializePassport();
 
+
 mongoose.connect("mongodb://localhost:27017/tictactoe", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-i18next
-  .use(Backend)
-  .use(middleware.LanguageDetector)
-  .init({
-    backend: {
-      loadPath: "./locales/{{lng}}/{{ns}}.json",
-      addPath: "./locales/{{lng}}/{{ns}}.missing.json",
-    },
-    fallbackLng: "en",
-    preload: ["en", "fr"],
-    saveMissing: true,
-  });
-
-app.use(middleware.handle(i18next));
+app.use(negociateTrad);
 
 app.use(
-  negotiateFormat({
+  negociateFormat({
     formats: ["application/json", "text/csv"],
   })
 );
+
+app.get('/', (req, res) => {
+    const welcomeMessage = req.t('welcome');
+    res.send(welcomeMessage);
+});
 
 app.use(
   "/games",

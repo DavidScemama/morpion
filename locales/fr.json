@@ -1,0 +1,14 @@
+{
+    "welcome": "Bienvenue au Tic Tac Toe!",
+    "auth": {
+      "unauthorized": "Accès non autorisé",
+      "loggedin": "Connexion réussie",
+      "invalid": "Nom d'utilisateur ou mot de passe invalide"
+    },
+    "game": {
+      "created": "Partie créée avec succès",
+      "joined": "Partie rejointe avec succès",
+      "move": "Mouvement effectué avec succès",
+      "invalidMove": "Mouvement invalide"
+    }
+  }
