@@ -6,10 +6,16 @@ const middleware = require("i18next-http-middleware");
 const authentication = require('./middlewares/authentication');
 const gameRouterV1 = require("./routes/v1/games");
 const userRouterV1 = require("./routes/v1/users");
+const initializeMongoose = require('./config/mongoose');
+const initializePassport = require('./config/passport');
+const apiVersions = require('./middlewares/apiVersions');
+const useHATEOAS = require('./middlewares/useHATEOAS');
 
 const app = express();
 app.use(express.json());
 require('dotenv').config();
+initializeMongoose();
+initializePassport();
 
 mongoose.connect("mongodb://localhost:27017/tictactoe", {
   useNewUrlParser: true,

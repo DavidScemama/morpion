@@ -22,6 +22,4 @@ router.post("/", authentication, async (req, res) => {
   }
 });
 
-// D'autres routes pour rejoindre une partie, faire un mouvement, etc.
-
 module.exports = router;
