@@ -5,7 +5,7 @@ const GameSchema = new mongoose.Schema({
   player2: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   board: { type: Array, required: true },
   currentPlayer: { type: String, required: true },
-  status: { type: String, default: "in_progress" }, // or 'completed'
+  status: { type: String, default: "in_progress" },
 });
 
 const Game = mongoose.model("Game", GameSchema);
